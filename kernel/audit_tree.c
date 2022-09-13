@@ -5,40 +5,6 @@
 #include <linux/kthread.h>
 #include <linux/slab.h>
 
-struct audit_tree;
-struct audit_chunk;
-
-struct audit_tree {
-	atomic_t count;
-	int goner;
-	struct audit_chunk *root;
-	struct list_head chunks;
-	struct list_head rules;
-	struct list_head list;
-	struct list_head same_root;
-	struct rcu_head head;
-	char pathname[];
-};
-
-struct audit_chunk {
-	struct list_head hash;
-	struct fsnotify_mark mark;
-	struct list_head trees;		/* with root here */
-	int dead;
-	int count;
-	atomic_long_t refs;
-	struct rcu_head head;
-	struct node {
-		struct list_head list;
-		struct audit_tree *owner;
-		unsigned index;		/* index; upper bit indicates 'will prune' */
-	} owners[];
-};
-
-static LIST_HEAD(tree_list);
-static LIST_HEAD(prune_list);
-static struct task_struct *prune_thread;
-
 /*
  * One struct chunk is attached to each inode of interest.
  * We replace struct chunk on tagging/untagging.
