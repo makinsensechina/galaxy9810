@@ -45,6 +45,7 @@ static long __sh_cpufreq_target(void *arg)
 	struct cpufreq_target *target = arg;
 	struct cpufreq_policy *policy = target->policy;
 	int cpu = policy->cpu;
+	struct blk *cpublk = &per_cpu(sh_cpuclk, cpu);
 	struct clk *cpuclk = &per_cpu(sh_cpuclk, cpu);
 	struct cpufreq_freqs freqs;
 	struct device *dev;
