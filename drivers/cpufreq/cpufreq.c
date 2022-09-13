@@ -139,9 +139,9 @@ struct kobject *get_governor_parent_kobj(struct cpufreq_policy *policy)
 }
 EXPORT_SYMBOL_GPL(get_governor_parent_kobj);
 
-static inline u64 get_cpu_idle_time_jiffy(unsigned int cpu, u64 *wall)
+static inline u64 get_cpu_offline_time_jiffy(unsigned int cpu, u64 *wall)
 {
-	u64 idle_time;
+	u64 offline_time;
 	u64 cur_wall_time;
 	u64 busy_time;
 
